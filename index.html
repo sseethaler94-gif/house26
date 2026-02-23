@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOUSE 26 | Creative Production Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #141414;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+        }
+        
+        * { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Space Grotesk', sans-serif; }
+        
+        body {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.1) 50%, rgba(236, 72, 153, 0.15) 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.85);
+        }
+        
+        .language-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .language-btn.active {
+            background: var(--accent-purple);
+            color: white;
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .service-icon {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+        }
+        
+        .team-card {
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.1) 0%, rgba(20, 20, 20, 0.9) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .team-card:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+        
+        .stat-number {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .glow-btn {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .glow-btn:hover {
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        [data-lang="sr"] { display: none; }
+        body.lang-sr [data-lang="en"] { display: none; }
+        body.lang-sr [data-lang="sr"] { display: block; }
+        body.lang-sr [data-lang="sr"].inline { display: inline; }
+        body.lang-sr [data-lang="sr"].flex { display: flex; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <img src="resources/house26-logo.png" alt="HOUSE 26 Logo" class="w-10 h-10 object-contain">
+                        <span class="text-2xl font-bold font-display">HOUSE 26</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="text-white hover:text-purple-400 transition-colors" data-lang="en">Home</a>
+                    <a href="index.html" class="text-white hover:text-purple-400 transition-colors hidden" data-lang="sr">Početna</a>
+                    
+                    <a href="services.html" class="text-gray-300 hover:text-purple-400 transition-colors" data-lang="en">Services</a>
+                    <a href="services.html" class="text-gray-300 hover:text-purple-400 transition-colors hidden" data-lang="sr">Usluge</a>
+                    
+                    <a href="team.html" class="text-gray-300 hover:text-purple-400 transition-colors" data-lang="en">Team</a>
+                    <a href="team.html" class="text-gray-300 hover:text-purple-400 transition-colors hidden" data-lang="sr">Tim</a>
+                    
+                    <a href="portfolio.html" class="text-gray-300 hover:text-purple-400 transition-colors" data-lang="en">Portfolio</a>
+                    <a href="portfolio.html" class="text-gray-300 hover:text-purple-400 transition-colors hidden" data-lang="sr">Portfolio</a>
+                    
+                    <a href="contact.html" class="text-gray-300 hover:text-purple-400 transition-colors" data-lang="en">Contact</a>
+                    <a href="contact.html" class="text-gray-300 hover:text-purple-400 transition-colors hidden" data-lang="sr">Kontakt</a>
+                </div>
+                
+                <!-- Language Switcher -->
+                <div class="flex items-center space-x-2">
+                    <button onclick="setLanguage('en')" class="language-btn active px-3 py-1 rounded text-sm font-medium" id="btn-en">EN</button>
+                    <button onclick="setLanguage('sr')" class="language-btn px-3 py-1 rounded text-sm font-medium text-gray-400 hover:text-white" id="btn-sr">SR</button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden text-white">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-black/95 border-t border-white/10">
+            <div class="px-4 py-6 space-y-4">
+                <a href="index.html" class="block text-white text-lg" data-lang="en">Home</a>
+                <a href="index.html" class="block text-white text-lg hidden" data-lang="sr">Početna</a>
+                <a href="services.html" class="block text-gray-300 text-lg" data-lang="en">Services</a>
+                <a href="services.html" class="block text-gray-300 text-lg hidden" data-lang="sr">Usluge</a>
+                <a href="team.html" class="block text-gray-300 text-lg" data-lang="en">Team</a>
+                <a href="team.html" class="block text-gray-300 text-lg hidden" data-lang="sr">Tim</a>
+                <a href="portfolio.html" class="block text-gray-300 text-lg" data-lang="en">Portfolio</a>
+                <a href="portfolio.html" class="block text-gray-300 text-lg hidden" data-lang="sr">Portfolio</a>
+                <a href="contact.html" class="block text-gray-300 text-lg" data-lang="en">Contact</a>
+                <a href="contact.html" class="block text-gray-300 text-lg hidden" data-lang="sr">Kontakt</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="resources/hero-3d-abstract.png" alt="HOUSE 26 Creative Studio" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black"></div>
+        </div>
+        
+        <!-- Animated Particles -->
+        <div class="absolute inset-0 z-1 overflow-hidden" id="particles"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
+            <div class="mb-6 scroll-reveal">
+                <span class="inline-block px-4 py-2 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-sm font-medium" data-lang="en">
+                    Creative Production Studio
+                </span>
+                <span class="inline-block px-4 py-2 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-sm font-medium hidden" data-lang="sr">
+                    Kreativni Produkcijski Studio
+                </span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold font-display mb-8 scroll-reveal" style="animation-delay: 0.1s">
+                <span class="gradient-text">HOUSE 26</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto scroll-reveal" style="animation-delay: 0.2s" data-lang="en">
+                Where Music, Film, Design & Technology Converge
+            </p>
+            <p class="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto scroll-reveal hidden" style="animation-delay: 0.2s" data-lang="sr">
+                Gde se Muzika, Film, Dizajn i Tehnologija Spajaju
+            </p>
+            
+            <p class="text-lg text-gray-400 mb-12 max-w-2xl mx-auto scroll-reveal" style="animation-delay: 0.3s" data-lang="en">
+                Full-service creative collective delivering world-class music production, film & video, 3D animation, design, and professional photography.
+            </p>
+            <p class="text-lg text-gray-400 mb-12 max-w-2xl mx-auto scroll-reveal hidden" style="animation-delay: 0.3s" data-lang="sr">
+                Full-service kreativni kolektiv koji pruža vrhunsku produkciju muzike, film i video, 3D animaciju, dizajn i profesionalnu fotografiju.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center scroll-reveal" style="animation-delay: 0.4s">
+                <a href="contact.html" class="glow-btn bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-8 py-4 rounded-full font-semibold text-lg" data-lang="en">
+                    Start Your Project
+                </a>
+                <a href="contact.html" class="glow-btn bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-8 py-4 rounded-full font-semibold text-lg hidden" data-lang="sr">
+                    Zapocnite Projekt
+                </a>
+                
+                <a href="portfolio.html" class="border border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold text-lg transition-all" data-lang="en">
+                    View Our Work
+                </a>
+                <a href="portfolio.html" class="border border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold text-lg transition-all hidden" data-lang="sr">
+                    Pogledajte Radove
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-black/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">500+</div>
+                    <p class="text-gray-400" data-lang="en">Projects Completed</p>
+                    <p class="text-gray-400 hidden" data-lang="sr">Završenih Projekata</p>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">8</div>
+                    <p class="text-gray-400" data-lang="en">Creative Experts</p>
+                    <p class="text-gray-400 hidden" data-lang="sr">Kreativnih Eksperata</p>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">50+</div>
+                    <p class="text-gray-400" data-lang="en">Happy Clients</p>
+                    <p class="text-gray-400 hidden" data-lang="sr">Zadovoljnih Klijenata</p>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="stat-number text-4xl md:text-5xl font-bold mb-2">5+</div>
+                    <p class="text-gray-400" data-lang="en">Years Experience</p>
+                    <p class="text-gray-400 hidden" data-lang="sr">Godina Iskustva</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold font-display mb-6" data-lang="en">
+                    Our <span class="gradient-text">Services</span>
+                </h2>
+                <h2 class="text-4xl md:text-5xl font-bold font-display mb-6 hidden" data-lang="sr">
+                    Naše <span class="gradient-text">Usluge</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto" data-lang="en">
+                    From concept to completion, we bring your creative vision to life across multiple disciplines.
+                </p>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto hidden" data-lang="sr">
+                    Od koncepta do završetka, oživljavamo vašu kreativnu viziju kroz više disciplina.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Music Production -->
+                <div class="card-hover bg-gradient-to-br from-purple-900/20 to-black rounded-2xl p-8 border border-purple-500/20 scroll-reveal">
+                    <div class="service-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.369 4.369 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" data-lang="en">Music Production</h3>
+                    <h3 class="text-2xl font-bold mb-4 hidden" data-lang="sr">Produkcija Muzike</h3>
+                    <p class="text-gray-400 mb-6" data-lang="en">Full music production services including recording, mixing, mastering, and composition for artists and brands.</p>
+                    <p class="text-gray-400 mb-6 hidden" data-lang="sr">Kompletne usluge produkcije muzike uključujući snimanje, miksanje, masterovanje i komponovanje za umetnike i brendove.</p>
+                    <a href="services.html" class="text-purple-400 hover:text-purple-300 font-medium flex items-center">
+                        <span data-lang="en">Learn more</span>
+                        <span data-lang="sr" class="hidden">Saznaj više</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Film & Video -->
+                <div class="card-hover bg-gradient-to-br from-cyan-900/20 to-black rounded-2xl p-8 border border-cyan-500/20 scroll-reveal">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" data-lang="en">Film & Video</h3>
+                    <h3 class="text-2xl font-bold mb-4 hidden" data-lang="sr">Film i Video</h3>
+                    <p class="text-gray-400 mb-6" data-lang="en">Music videos, commercials, documentaries, and cinematic content with professional production quality.</p>
+                    <p class="text-gray-400 mb-6 hidden" data-lang="sr">Spotovi, reklame, dokumentarni filmovi i filmski sadržaj sa profesionalnom produkcijskom kvalitetom.</p>
+                    <a href="services.html" class="text-cyan-400 hover:text-cyan-300 font-medium flex items-center">
+                        <span data-lang="en">Learn more</span>
+                        <span data-lang="sr" class="hidden">Saznaj više</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- 3D Animation -->
+                <div class="card-hover bg-gradient-to-br from-pink-900/20 to-black rounded-2xl p-8 border border-pink-500/20 scroll-reveal">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" data-lang="en">3D Animation</h3>
+                    <h3 class="text-2xl font-bold mb-4 hidden" data-lang="sr">3D Animacija</h3>
+                    <p class="text-gray-400 mb-6" data-lang="en">Stunning 3D visuals, motion graphics, and animated content for music videos, brands, and digital platforms.</p>
+                    <p class="text-gray-400 mb-6 hidden" data-lang="sr">Zapanjujuća 3D vizuala, motion grafika i animirani sadržaj za spotove, brendove i digitalne platforme.</p>
+                    <a href="services.html" class="text-pink-400 hover:text-pink-300 font-medium flex items-center">
+                        <span data-lang="en">Learn more</span>
+                        <span data-lang="sr" class="hidden">Saznaj više</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Design -->
+                <div class="card-hover bg-gradient-to-br from-orange-900/20 to-black rounded-2xl p-8 border border-orange-500/20 scroll-reveal">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" data-lang="en">Graphic Design</h3>
+                    <h3 class="text-2xl font-bold mb-4 hidden" data-lang="sr">Grafički Dizajn</h3>
+                    <p class="text-gray-400 mb-6" data-lang="en">Brand identity, album artwork, promotional materials, and visual design that makes an impact.</p>
+                    <p class="text-gray-400 mb-6 hidden" data-lang="sr">Brend identitet, omoti albuma, promotivni materijali i vizuelni dizajn koji ostavlja utisak.</p>
+                    <a href="services.html" class="text-orange-400 hover:text-orange-300 font-medium flex items-center">
+                        <span data-lang="en">Learn more</span>
+                        <span data-lang="sr" class="hidden">Saznaj više</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Photography -->
+                <div class="card-hover bg-gradient-to-br from-green-900/20 to-black rounded-2xl p-8 border border-green-500/20 scroll-reveal">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" data-lang="en">Photography</h3>
+                    <h3 class="text-2xl font-bold mb-4 hidden" data-lang="sr">Fotografija</h3>
+                    <p class="text-gray-400 mb-6" data-lang="en">Professional photography for artists, events, products, and brand campaigns with studio and on-location options.</p>
+                    <p class="text-gray-400 mb-6 hidden" data-lang="sr">Profesionalna fotografija za umetnike, događaje, proizvode i brend kampanje u studiju i na terenu.</p>
+                    <a href="services.html" class="text-green-400 hover:text-green-300 font-medium flex items-center">
+                        <span data-lang="en">Learn more</span>
+                        <span data-lang="sr" class="hidden">Saznaj više</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <!-- Content Creation -->
+                <div class="card-hover bg-gradient-to-br from-yellow-900/20 to-black rounded-2xl p-8 border border-yellow-500/20 scroll-reveal">
+                    <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-500 flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" data-lang="en">Content Creation</h3>
+                    <h3 class="text-2xl font-bold mb-4 hidden" data-lang="sr">Kreiranje Sadržaja</h3>
+                    <p class="text-gray-400 mb-6" data-lang="en">Social media content, marketing campaigns, and digital storytelling that engages your audience.</p>
+                    <p class="text-gray-400 mb-6 hidden" data-lang="sr">Sadržaj za društvene mreže, marketinške kampanje i digitalno pripovedanje koje angažuje vašu publiku.</p>
+                    <a href="services.html" class="text-yellow-400 hover:text-yellow-300 font-medium flex items-center">
+                        <span data-lang="en">Learn more</span>
+                        <span data-lang="sr" class="hidden">Saznaj više</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Work Preview -->
+    <section class="py-24 bg-gradient-to-b from-black to-purple-900/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold font-display mb-6" data-lang="en">
+                    Featured <span class="gradient-text">Work</span>
+                </h2>
+                <h2 class="text-4xl md:text-5xl font-bold font-display mb-6 hidden" data-lang="sr">
+                    Istaknuti <span class="gradient-text">Radovi</span>
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group relative overflow-hidden rounded-2xl scroll-reveal">
+                    <img src="resources/hero-film-production.png" alt="Film Production" class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute bottom-6 left-6">
+                            <span class="text-purple-400 text-sm font-medium">Music Video</span>
+                            <h3 class="text-xl font-bold mt-1">Neon Dreams</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-2xl scroll-reveal">
+                    <img src="resources/hero-photography.png" alt="Photography" class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute bottom-6 left-6">
+                            <span class="text-cyan-400 text-sm font-medium">Photography</span>
+                            <h3 class="text-xl font-bold mt-1">Artist Portrait Series</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden rounded-2xl scroll-reveal">
+                    <img src="resources/hero-modern.png" alt="Music Production" class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute bottom-6 left-6">
+                            <span class="text-pink-400 text-sm font-medium">Album Production</span>
+                            <h3 class="text-xl font-bold mt-1">Midnight Sessions</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 scroll-reveal">
+                <a href="portfolio.html" class="inline-flex items-center text-purple-400 hover:text-purple-300 font-semibold text-lg" data-lang="en">
+                    View All Projects
+                    <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </a>
+                <a href="portfolio.html" class="inline-flex items-center text-purple-400 hover:text-purple-300 font-semibold text-lg hidden" data-lang="sr">
+                    Pogledajte Sve Projekte
+                    <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900/30 via-cyan-900/30 to-pink-900/30"></div>
+        <div class="absolute inset-0 hero-gradient"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold font-display mb-6 scroll-reveal" data-lang="en">
+                Ready to Create Something <span class="gradient-text">Amazing?</span>
+            </h2>
+            <h2 class="text-4xl md:text-5xl font-bold font-display mb-6 hidden scroll-reveal" data-lang="sr">
+                Spremni da Kreirate Nešto <span class="gradient-text">Neverovatno?</span>
+            </h2>
+            
+            <p class="text-xl text-gray-300 mb-10 scroll-reveal" data-lang="en">
+                Let's bring your creative vision to life. Contact us today to discuss your project.
+            </p>
+            <p class="text-xl text-gray-300 mb-10 hidden scroll-reveal" data-lang="sr">
+                Oživimo vašu kreativnu viziju. Kontaktirajte nas danas da diskutujemo o vašem projektu.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center scroll-reveal">
+                <a href="contact.html" class="glow-btn bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-10 py-4 rounded-full font-semibold text-lg" data-lang="en">
+                    Get In Touch
+                </a>
+                <a href="contact.html" class="glow-btn bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-10 py-4 rounded-full font-semibold text-lg hidden" data-lang="sr">
+                    Stupite u Kontakt
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="resources/house26-logo.png" alt="HOUSE 26 Logo" class="w-10 h-10 object-contain">
+                        <span class="text-2xl font-bold font-display">HOUSE 26</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md" data-lang="en">
+                        Full-service creative collective delivering world-class music production, film & video, 3D animation, design, and photography.
+                    </p>
+                    <p class="text-gray-400 mb-6 max-w-md hidden" data-lang="sr">
+                        Full-service kreativni kolektiv koji pruža vrhunsku produkciju muzike, film i video, 3D animaciju, dizajn i fotografiju.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-purple-500 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-purple-500 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-purple-500 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-purple-500 transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4" data-lang="en">Quick Links</h4>
+                    <h4 class="font-semibold mb-4 hidden" data-lang="sr">Brzi Linkovi</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="services.html" class="hover:text-white transition-colors" data-lang="en">Services</a><a href="services.html" class="hover:text-white transition-colors hidden" data-lang="sr">Usluge</a></li>
+                        <li><a href="team.html" class="hover:text-white transition-colors" data-lang="en">Team</a><a href="team.html" class="hover:text-white transition-colors hidden" data-lang="sr">Tim</a></li>
+                        <li><a href="portfolio.html" class="hover:text-white transition-colors">Portfolio</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors" data-lang="en">Contact</a><a href="contact.html" class="hover:text-white transition-colors hidden" data-lang="sr">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4" data-lang="en">Contact</h4>
+                    <h4 class="font-semibold mb-4 hidden" data-lang="sr">Kontakt</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>info@house26.studio</li>
+                        <li>+381 XX XXX XXXX</li>
+                        <li>Belgrade, Serbia</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 HOUSE 26. <span data-lang="en">All rights reserved.</span><span data-lang="sr" class="hidden">Sva prava zadržana.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Switcher
+        function setLanguage(lang) {
+            document.body.classList.toggle('lang-sr', lang === 'sr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-en').classList.toggle('text-gray-400', lang === 'sr');
+            document.getElementById('btn-sr').classList.toggle('active', lang === 'sr');
+            document.getElementById('btn-sr').classList.toggle('text-gray-400', lang === 'en');
+            localStorage.setItem('language', lang);
+        }
+        
+        // Load saved language
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+        
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Particle Animation
+        const particlesContainer = document.getElementById('particles');
+        if (particlesContainer) {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'absolute rounded-full bg-purple-500/30';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animation = `float ${Math.random() * 10 + 10}s infinite ease-in-out`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+    </script>
+    
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            50% { transform: translateY(-100px) translateX(50px); opacity: 0.8; }
+        }
+    </style>
+</body>
+</html>

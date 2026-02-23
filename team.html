@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team | HOUSE 26 - Creative Production Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #141414;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+        }
+        
+        * { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Space Grotesk', sans-serif; }
+        
+        body {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.85);
+        }
+        
+        .team-card {
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(20, 20, 20, 0.95) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .team-card:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+            transform: translateY(-8px);
+        }
+        
+        .team-card:hover .team-image {
+            transform: scale(1.05);
+        }
+        
+        .team-image {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .language-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .language-btn.active {
+            background: var(--accent-purple);
+            color: white;
+        }
+        
+        .skill-tag {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(180deg, #141414 0%, #0a0a0a 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        [data-lang="sr"] { display: none; }
+        body.lang-sr [data-lang="en"] { display: none; }
+        body.lang-sr [data-lang="sr"] { display: block; }
+        body.lang-sr [data-lang="sr"].inline { display: inline; }
+        body.lang-sr [data-lang="sr"].flex { display: flex; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 nav-blur border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-3">
+                        <img src="resources/house26-logo.png" alt="HOUSE 26 Logo" class="w-10 h-10 object-contain">
+                        <span class="text-2xl font-bold font-display">HOUSE 26</span>
+                    </a>
+                </div>
+                
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-purple-400 transition-colors" data-lang="en">Home</a>
+                    <a href="index.html" class="text-gray-300 hover:text-purple-400 transition-colors hidden" data-lang="sr">Početna</a>
+                    <a href="services.html" class="text-gray-300 hover:text-purple-400 transition-colors" data-lang="en">Services</a>
+                    <a href="services.html" class="text-gray-300 hover:text-purple-400 transition-colors hidden" data-lang="sr">Usluge</a>
+                    <a href="team.html" class="text-white hover:text-purple-400 transition-colors" data-lang="en">Team</a>
+                    <a href="team.html" class="text-white hover:text-purple-400 transition-colors hidden" data-lang="sr">Tim</a>
+                    <a href="portfolio.html" class="text-gray-300 hover:text-purple-400 transition-colors">Portfolio</a>
+                    <a href="contact.html" class="text-gray-300 hover:text-purple-400 transition-colors" data-lang="en">Contact</a>
+                    <a href="contact.html" class="text-gray-300 hover:text-purple-400 transition-colors hidden" data-lang="sr">Kontakt</a>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <button onclick="setLanguage('en')" class="language-btn active px-3 py-1 rounded text-sm font-medium" id="btn-en">EN</button>
+                    <button onclick="setLanguage('sr')" class="language-btn px-3 py-1 rounded text-sm font-medium text-gray-400 hover:text-white" id="btn-sr">SR</button>
+                </div>
+                
+                <button id="mobile-menu-btn" class="lg:hidden text-white">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden lg:hidden bg-black/95 border-t border-white/10">
+            <div class="px-4 py-6 space-y-4">
+                <a href="index.html" class="block text-gray-300 text-lg">Home</a>
+                <a href="services.html" class="block text-gray-300 text-lg">Services</a>
+                <a href="team.html" class="block text-white text-lg">Team</a>
+                <a href="portfolio.html" class="block text-gray-300 text-lg">Portfolio</a>
+                <a href="contact.html" class="block text-gray-300 text-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[60vh] flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-black to-black"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold font-display mb-6 scroll-reveal">
+                <span class="gradient-text" data-lang="en">Meet the Team</span>
+                <span class="gradient-text hidden" data-lang="sr">Upoznajte Tim</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto scroll-reveal" data-lang="en">
+                Eight creative minds, one shared vision. Our diverse team brings together expertise across music, film, design, and technology.
+            </p>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto scroll-reveal hidden" data-lang="sr">
+                Osam kreativnih umova, jedna zajednička vizija. Naš raznovrsni tim okuplja stručnost iz muzike, filma, dizajna i tehnologije.
+            </p>
+        </div>
+    </section>
+
+    <!-- Team Grid -->
+    <section class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Music Producer -->
+                <div class="team-card rounded-2xl overflow-hidden scroll-reveal" onclick="openTeamModal('producer')">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="resources/team-producer.png" alt="Music Producer" class="team-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-purple-400 text-sm font-medium">Music Producer / Composer</span>
+                        <h3 class="text-xl font-bold mt-1">Marko Nikolić</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-lang="en">10+ years in music production</p>
+                        <p class="text-gray-400 text-sm mt-2 hidden" data-lang="sr">10+ godina u produkciji muzike</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Pro Tools</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Logic Pro</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Composition</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Director -->
+                <div class="team-card rounded-2xl overflow-hidden scroll-reveal" onclick="openTeamModal('director')">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="resources/team-director.png" alt="Director" class="team-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-cyan-400 text-sm font-medium">Director</span>
+                        <h3 class="text-xl font-bold mt-1">Ana Jovanović</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-lang="en">Award-winning film director</p>
+                        <p class="text-gray-400 text-sm mt-2 hidden" data-lang="sr">Nagrađivana filmska režiserka</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Directing</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Storytelling</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Cinematography</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Director of Photography -->
+                <div class="team-card rounded-2xl overflow-hidden scroll-reveal" onclick="openTeamModal('dop')">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="resources/team-dop.png" alt="Director of Photography" class="team-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-pink-400 text-sm font-medium">Director of Photography</span>
+                        <h3 class="text-xl font-bold mt-1">Stefan Petrović</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-lang="en">Visual storytelling expert</p>
+                        <p class="text-gray-400 text-sm mt-2 hidden" data-lang="sr">Ekspert za vizuelno pripovedanje</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Camera Work</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Lighting</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Color Grading</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Designer -->
+                <div class="team-card rounded-2xl overflow-hidden scroll-reveal" onclick="openTeamModal('designer')">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="resources/team-designer.png" alt="Designer" class="team-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-orange-400 text-sm font-medium">Graphic Designer</span>
+                        <h3 class="text-xl font-bold mt-1">Jelena Marković</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-lang="en">Brand identity specialist</p>
+                        <p class="text-gray-400 text-sm mt-2 hidden" data-lang="sr">Specijalista za brend identitet</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Adobe CC</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Branding</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Creator -->
+                <div class="team-card rounded-2xl overflow-hidden scroll-reveal" onclick="openTeamModal('content')">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="resources/team-content.png" alt="Content Creator" class="team-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-yellow-400 text-sm font-medium">Content Creator</span>
+                        <h3 class="text-xl font-bold mt-1">Milan Kovačević</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-lang="en">Social media strategist</p>
+                        <p class="text-gray-400 text-sm mt-2 hidden" data-lang="sr">Strateg društvenih mreža</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Social Media</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Video Editing</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Copywriting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing -->
+                <div class="team-card rounded-2xl overflow-hidden scroll-reveal" onclick="openTeamModal('marketing')">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="resources/team-marketing.png" alt="Marketing" class="team-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-green-400 text-sm font-medium">Marketing Manager</span>
+                        <h3 class="text-xl font-bold mt-1">Sofija Ilić</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-lang="en">Digital marketing expert</p>
+                        <p class="text-gray-400 text-sm mt-2 hidden" data-lang="sr">Ekspert za digitalni marketing</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Strategy</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Analytics</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Campaigns</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Artist -->
+                <div class="team-card rounded-2xl overflow-hidden scroll-reveal" onclick="openTeamModal('3dartist')">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="resources/team-3dartist.png" alt="3D Artist" class="team-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-red-400 text-sm font-medium">3D Artist</span>
+                        <h3 class="text-xl font-bold mt-1">Nina Stojanović</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-lang="en">Animation & motion graphics</p>
+                        <p class="text-gray-400 text-sm mt-2 hidden" data-lang="sr">Animacija i motion grafika</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Blender</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Cinema 4D</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">After Effects</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lyricist -->
+                <div class="team-card rounded-2xl overflow-hidden scroll-reveal" onclick="openTeamModal('lyricist')">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="resources/team-lyricist.png" alt="Lyricist" class="team-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-indigo-400 text-sm font-medium">Lyricist / Songwriter</span>
+                        <h3 class="text-xl font-bold mt-1">Luka Đorđević</h3>
+                        <p class="text-gray-400 text-sm mt-2" data-lang="en">Words that move people</p>
+                        <p class="text-gray-400 text-sm mt-2 hidden" data-lang="sr">Reči koje pokreću ljude</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Songwriting</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Poetry</span>
+                            <span class="skill-tag px-2 py-1 rounded text-xs">Storytelling</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Modal -->
+    <div id="team-modal" class="modal">
+        <div class="modal-content rounded-2xl p-8 m-4">
+            <div class="flex justify-between items-start mb-6">
+                <h3 id="modal-name" class="text-3xl font-bold gradient-text"></h3>
+                <button onclick="closeTeamModal()" class="text-gray-400 hover:text-white">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900/30 via-cyan-900/30 to-pink-900/30"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold font-display mb-6 scroll-reveal" data-lang="en">
+                Want to Work With Our <span class="gradient-text">Team?</span>
+            </h2>
+            <h2 class="text-4xl md:text-5xl font-bold font-display mb-6 scroll-reveal hidden" data-lang="sr">
+                Želite da Radite sa Našim <span class="gradient-text">Timom?</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-10 scroll-reveal" data-lang="en">
+                Let's create something extraordinary together.
+            </p>
+            <p class="text-xl text-gray-300 mb-10 scroll-reveal hidden" data-lang="sr">
+                Hajde da zajedno kreiramo nešto izuzetno.
+            </p>
+            <a href="contact.html" class="inline-block bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-10 py-4 rounded-full font-semibold text-lg scroll-reveal" data-lang="en">
+                Get In Touch
+            </a>
+            <a href="contact.html" class="inline-block bg-gradient-to-r from-purple-600 to-cyan-600 text-white px-10 py-4 rounded-full font-semibold text-lg scroll-reveal hidden" data-lang="sr">
+                Stupite u Kontakt
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-3 mb-6">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">H26</span>
+                    </div>
+                    <span class="text-2xl font-bold font-display">HOUSE 26</span>
+                </div>
+                <p class="text-gray-500">&copy; 2024 HOUSE 26. <span data-lang="en">All rights reserved.</span><span data-lang="sr" class="hidden">Sva prava zadržana.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Team Member Data
+        const teamData = {
+            producer: {
+                name: 'Marko Nikolić',
+                role: 'Music Producer / Composer',
+                bio: {
+                    en: 'With over a decade of experience in music production, Marko has worked with some of the biggest names in the Serbian music industry. His expertise spans multiple genres from pop and rock to electronic and hip-hop.',
+                    sr: 'Sa preko decenije iskustva u produkciji muzike, Marko je radio sa nekim od najvećih imena u srpskoj muzičkoj industriji. Njegova stručnost obuhvata više žanrova od popa i roka do elektronske muzike i hip-hopa.'
+                },
+                portfolio: [
+                    'Produced 3 chart-topping albums',
+                    'Composed music for 10+ commercials',
+                    'Worked with major Serbian artists',
+                    'Specializes in mixing and mastering'
+                ],
+                skills: ['Pro Tools', 'Logic Pro', 'Ableton Live', 'Composition', 'Arrangement', 'Mixing', 'Mastering']
+            },
+            director: {
+                name: 'Ana Jovanović',
+                role: 'Director',
+                bio: {
+                    en: 'Ana is an award-winning director with a passion for visual storytelling. Her music videos have garnered millions of views and her short films have been featured at international festivals.',
+                    sr: 'Ana je nagrađivana režiserka sa strašću za vizuelno pripovedanje. Njeni spotovi su sakupili milione pregleda, a njeni kratki filmovi prikazivani su na međunarodnim festivalima.'
+                },
+                portfolio: [
+                    'Directed 50+ music videos',
+                    'Winner of Best Music Video Award 2023',
+                    'Featured at Belgrade Film Festival',
+                    'Collaborated with international artists'
+                ],
+                skills: ['Directing', 'Storyboarding', 'Visual Storytelling', 'Cinematography', 'Editing', 'Color Grading']
+            },
+            dop: {
+                name: 'Stefan Petrović',
+                role: 'Director of Photography',
+                bio: {
+                    en: 'Stefan brings a cinematic eye to every project. His mastery of lighting and camera work creates stunning visuals that elevate every production he touches.',
+                    sr: 'Stefan donosi filmsko oko svakom projektu. Njegovo poznavanje osvetljenja i rada sa kamerom stvara zapanjujuće vizuale koji uzdižu svaku produkciju kojoj prilazi.'
+                },
+                portfolio: [
+                    'Shot 30+ music videos',
+                    'Worked on feature films',
+                    'Expert in ARRI and RED cameras',
+                    'Specializes in dramatic lighting'
+                ],
+                skills: ['Camera Operation', 'Lighting Design', 'Color Theory', 'Gimbal Work', 'Drone Cinematography']
+            },
+            designer: {
+                name: 'Jelena Marković',
+                role: 'Graphic Designer',
+                bio: {
+                    en: 'Jelena is a visual artist who transforms ideas into compelling designs. Her work on album covers and brand identities has helped artists stand out in a crowded market.',
+                    sr: 'Jelena je vizuelna umetnica koja transformiše ideje u ubedljive dizajne. Njen rad na omotima albuma i brend identitetima pomogao je umetnicima da se istaknu na zasićenom tržištu.'
+                },
+                portfolio: [
+                    'Designed 100+ album covers',
+                    'Created brand identities for 20+ artists',
+                    'Expert in Adobe Creative Suite',
+                    'Specializes in typography and layout'
+                ],
+                skills: ['Photoshop', 'Illustrator', 'InDesign', 'Branding', 'Typography', 'UI/UX Design']
+            },
+            content: {
+                name: 'Milan Kovačević',
+                role: 'Content Creator',
+                bio: {
+                    en: 'Milan knows how to make content that resonates. From viral social media campaigns to engaging behind-the-scenes content, he keeps audiences coming back for more.',
+                    sr: 'Milan zna kako da napravi sadržaj koji odjekuje. Od virusnih kampanja na društvenim mrežama do angažujućeg sadržaja iza kulisa, on drži publiku koja se vraća po više.'
+                },
+                portfolio: [
+                    'Grew artist social media by 300%',
+                    'Created viral TikTok campaigns',
+                    'Manages content for 10+ artists',
+                    'Expert in video editing'
+                ],
+                skills: ['Social Media Strategy', 'Video Editing', 'Copywriting', 'SEO', 'Analytics']
+            },
+            marketing: {
+                name: 'Sofija Ilić',
+                role: 'Marketing Manager',
+                bio: {
+                    en: 'Sofija combines creativity with data-driven strategies to maximize reach and engagement. Her campaigns have helped artists break into new markets.',
+                    sr: 'Sofija kombinuje kreativnost sa strategijama zasnovanim na podacima da maksimizira doseg i angažman. Njene kampanje pomogle su umetnicima da probiju na nova tržišta.'
+                },
+                portfolio: [
+                    'Managed campaigns for 50+ releases',
+                    'Increased streaming numbers by 200%',
+                    'Expert in digital advertising',
+                    'Specializes in audience targeting'
+                ],
+                skills: ['Digital Marketing', 'Social Media Ads', 'Email Marketing', 'Analytics', 'Strategy']
+            },
+            '3dartist': {
+                name: 'Nina Stojanović',
+                role: '3D Artist',
+                bio: {
+                    en: 'Nina creates stunning 3D visuals and animations that bring music videos and brand content to life. Her work pushes the boundaries of visual effects.',
+                    sr: 'Nina kreira zapanjujuće 3D vizuale i animacije koje oživljavaju spotove i brend sadržaj. Njen rad gura granice vizuelnih efekata.'
+                },
+                portfolio: [
+                    'Created VFX for 20+ music videos',
+                    '3D animation for commercials',
+                    'Motion graphics for live shows',
+                    'Virtual reality experiences'
+                ],
+                skills: ['Blender', 'Cinema 4D', 'After Effects', 'Motion Graphics', 'VFX', '3D Modeling']
+            },
+            lyricist: {
+                name: 'Luka Đorđević',
+                role: 'Lyricist / Songwriter',
+                bio: {
+                    en: 'Luka crafts lyrics that touch hearts and tell stories. His words have been sung by some of the most beloved artists in the region.',
+                    sr: 'Luka kreira tekstove koji diraju srca i pričaju priče. Njegove reči pevale su neki od najomiljenijih umetnika u regionu.'
+                },
+                portfolio: [
+                    'Written 200+ songs',
+                    '3 number-one hits',
+                    'Collaborated with top artists',
+                    'Published poetry collection'
+                ],
+                skills: ['Songwriting', 'Poetry', 'Storytelling', 'Creative Writing', 'Lyric Adaptation']
+            }
+        };
+
+        function openTeamModal(memberId) {
+            const member = teamData[memberId];
+            if (!member) return;
+            
+            const modal = document.getElementById('team-modal');
+            const modalName = document.getElementById('modal-name');
+            const modalContent = document.getElementById('modal-content');
+            
+            const isSerbian = document.body.classList.contains('lang-sr');
+            
+            modalName.textContent = member.name;
+            modalContent.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-purple-400 font-medium mb-4">${member.role}</p>
+                        <p class="text-gray-300 mb-6">${isSerbian ? member.bio.sr : member.bio.en}</p>
+                        
+                        <h4 class="text-lg font-semibold mb-3">${isSerbian ? 'Portfolio' : 'Portfolio'}</h4>
+                        <ul class="space-y-2 mb-6">
+                            ${member.portfolio.map(item => `<li class="text-gray-400 text-sm">• ${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3">${isSerbian ? 'Veštine' : 'Skills'}</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${member.skills.map(skill => `<span class="skill-tag px-3 py-1 rounded-full text-sm">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeTeamModal() {
+            document.getElementById('team-modal').classList.remove('active');
+        }
+
+        // Language Switcher
+        function setLanguage(lang) {
+            document.body.classList.toggle('lang-sr', lang === 'sr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-en').classList.toggle('text-gray-400', lang === 'sr');
+            document.getElementById('btn-sr').classList.toggle('active', lang === 'sr');
+            document.getElementById('btn-sr').classList.toggle('text-gray-400', lang === 'en');
+            localStorage.setItem('language', lang);
+        }
+
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+
+        // Mobile Menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('revealed');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
